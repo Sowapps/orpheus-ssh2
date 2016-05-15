@@ -1,0 +1,10 @@
+{
+	"description" : "Orpheus SSH2",
+	"authors" : [{
+			"name" : "Florent HAZARD",
+			"email" : "f.hazard@sowapps.com",
+			"homepage" : "http://sowapps.com",
+			"role" : "Developer"
+		}
+	]
+}
