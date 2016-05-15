@@ -10,6 +10,11 @@
 	"name" : "orpheus/orpheus-ssh2",
 	"type" : "library",
 	"license" : "MIT",
+	"autoload" : {
+		"psr-4" : {
+			"Orpheus\\Net" : ""
+		}
+	},
 	"keywords" : [
 		"ssh2"
 	]
