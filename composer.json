@@ -6,5 +6,11 @@
 			"homepage" : "http://sowapps.com",
 			"role" : "Developer"
 		}
+	],
+	"name" : "orpheus/orpheus-ssh2",
+	"type" : "library",
+	"license" : "MIT",
+	"keywords" : [
+		"ssh2"
 	]
 }
