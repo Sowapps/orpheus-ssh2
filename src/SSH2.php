@@ -68,8 +68,7 @@ class SSH2 {
 // 		debug('SSH2', $this);
 		if( $this->privateKeyPath && ssh2_auth_pubkey_file($connection, $this->username, $this->publicKeyPath, $this->privateKeyPath, $this->passphrase) ) {
 			$authenticated = true;
-		} else
-		if( $this->password && ssh2_auth_password($connection, $this->username, $this->password) ) {
+		} elseif( $this->password && ssh2_auth_password($connection, $this->username, $this->password) ) {
 			$authenticated = true;
 		}
 		if( $authenticated ) {
