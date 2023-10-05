@@ -2,6 +2,8 @@
 
 namespace Orpheus\Net;
 
+use Exception;
+
 /**
  * Interface with SSH2 servers.
  * 
@@ -52,7 +54,7 @@ class SSH2 {
 // 		debug('SSH2 connect');
 		$connection = ssh2_connect($this->host, $this->port);
 		if( !$connection ) {
-			throw new \Exception('Cannot connect to server');
+			throw new Exception('Cannot connect to server');
 		}
 		$fingerprint = ssh2_fingerprint($connection, SSH2_FINGERPRINT_MD5 | SSH2_FINGERPRINT_HEX);
 // 		debug('Got $fingerprint => '.$fingerprint);
@@ -61,7 +63,7 @@ class SSH2 {
 			if( $this->allowingNewFingerprint ) {
 				$this->setFingerprint($fingerprint);
 			} else {
-				throw new \Exception('Unable to verify server fingerprint');
+				throw new Exception('Unable to verify server fingerprint');
 			}
 		}
 		$authenticated = false;
@@ -75,9 +77,9 @@ class SSH2 {
 			$this->connection = $connection;
 			return true;
 		}
-		throw new \Exception('Failed to authenticate');
+		throw new Exception('Failed to authenticate');
 // 		if (!ssh2_auth_pubkey_file($this->connection, $this->ssh_auth_user, $this->ssh_auth_pub, $this->ssh_auth_priv, $this->ssh_auth_pass)) {
-// 			throw new \Exception('Autentication rejected by server');
+		// 			throw new Exception('Autentication rejected by server');
 // 		}
 // 		return false;
 	}
@@ -109,7 +111,7 @@ class SSH2 {
 		// http://php.net/manual/en/function.ssh2-exec.php
 		$stream = ssh2_exec($this->connection, ($this->currentDirectory ? 'cd "'.$this->currentDirectory.'"; ' : '').$cmd);
 		if( $stream === false ) {
-			throw new \Exception('SSH command failed');
+			throw new Exception('SSH command failed');
 		}
 		return $stream;
 	}
@@ -174,11 +176,11 @@ class SSH2 {
 
 	public function setCertificateAuthentication($username, $privateKeyPath, $publicKeyPath=null, $passphrase=null) {
 		if( !is_readable($privateKeyPath) || !is_readable($publicKeyPath) ) {
-			throw new \Exception('Unable to read private key file and public key file, make it readable by web server (apache => www-data).');
+			throw new Exception('Unable to read private key file and public key file, make it readable by web server (apache => www-data).');
 		}
 		$this->username = $username;
 		$this->privateKeyPath = $privateKeyPath;
-		$this->publicKeyPath = $publicKeyPath ? $publicKeyPath : $privateKeyPath.'.pub';
+		$this->publicKeyPath = $publicKeyPath ?: $privateKeyPath . '.pub';
 		$this->passphrase = $passphrase;
 		return $this;
 	}
